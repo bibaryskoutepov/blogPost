@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[\App\Http\Controllers\HomeController::class,'home'])->name('home');
-Route::get('/contact',[\App\Http\Controllers\HomeController::class,'contact'])->name('contact');
+Route::get('/',[\App\Http\Controllers\HomeController::class,'home'])
+    ->name('home');
+Route::get('/contact',[\App\Http\Controllers\HomeController::class,'contact'])
+    ->name('contact');
 Route::resource('/posts',\App\Http\Controllers\PostController::class);
+
+//Auth::routes();
+

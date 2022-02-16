@@ -6,7 +6,7 @@
         @include('posts._form')
 
 
-        <button type="submit">Create!</button>
+        <button type="submit" class="button button1">Create!</button>
 
     </form>
 

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BlogPost;
+use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -19,7 +20,7 @@ class PostTest extends TestCase
 
 
     }
-    public function testSee1PostWhenThereIs1()
+    public function testSee1PostWhenThereIs1WithNoComments()
     {
 //        Arrange part
         $post = $this->createDummyBlogPost();
@@ -34,6 +35,18 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('blog_posts',[
             'title' => 'New title'
         ]);
+    }
+    public function testSee1BlogPostWithComments()
+    {
+        //        Arrange part
+        $post = $this->createDummyBlogPost();
+        Comment::factory(4)->create([
+            'blog_post_id'=>$post->id
+        ]);
+
+        $response = $this->get('/posts');
+        $response->assertSeeText('4 comments');
+
     }
 
     public function testStoreValid()
@@ -107,12 +120,13 @@ class PostTest extends TestCase
     }
     private function createDummyBlogPost():BlogPost
     {
-
-        $post = new BlogPost();
-        $post->title = 'New title';
-        $post->content = 'Content of the new title';
-        $post->save();
-
-        return $post;
+//
+//        $post = new BlogPost();
+//        $post->title = 'New title';
+//        $post->content = 'Content of the new title';
+//        $post->save();
+//
+//        return $post;
+        return BlogPost::factory()->newTitle()->create();
     }
 }
